@@ -1,0 +1,41 @@
+{
+  "name": "college-backend",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "src/server.js",
+  "scripts": {
+    "dev": "nodemon src/server.js",
+    "start": "node src/server.js",
+    "seed:admin": "node seedAdmin.js",
+    "seed:faculty": "node seedFaculty.js",
+    "seed:contacts": "node seedContacts.js",
+    "seed:courses": "node seedCourses.js",
+    "seed:detailed-profile": "node seedDetailedProfile.js",
+    "seed:ncc-queries": "node seedNCCQueries.js",
+    "seed:single-academic-cell": "node seedSingleAcademicCell.js",
+    "seed:all": "npm run seed:admin && npm run seed:faculty && npm run seed:contacts && npm run seed:courses && npm run seed:detailed-profile && npm run seed:ncc-queries && npm run seed:single-academic-cell"
+  },
+  "dependencies": {
+    "@fast-csv/format": "^5.0.5",
+    "@n8n/chat": "^0.60.0",
+    "axios": "^1.12.2",
+    "bcrypt": "^6.0.0",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.2",
+    "express": "^5.1.0",
+    "express-rate-limit": "^8.1.0",
+    "helmet": "^8.1.0",
+    "joi": "^18.0.1",
+    "jsonwebtoken": "^9.0.2",
+    "mongodb": "^6.19.0",
+    "mongoose": "^8.18.1",
+    "multer": "^1.4.5-lts.1",
+    "nodemailer": "^7.0.6",
+    "pdfkit": "^0.17.2",
+    "react-google-recaptcha": "^3.1.0",
+    "twilio": "^5.10.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  }
+}
