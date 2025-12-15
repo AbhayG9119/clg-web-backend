@@ -30,6 +30,8 @@ console.log('MONGO_URI:', process.env.MONGO_URI);
 
 connectDB();
 
+const allowedOrigins = ['http://localhost:3000', 'https://college-frontend-snswm.netlify.app'];
+
 const app = express();
 
 // Trust proxy for rate limiting behind load balancers/proxies
@@ -40,7 +42,7 @@ app.use(helmet({
   contentSecurityPolicy: false, // Disable CSP for development to allow image loading
 }));
 app.use(cors({
-  origin: process.env.FRONTEND_URL || 'http://localhost:3000',
+  origin: ['http://localhost:3000', 'https://college-frontend-snswm.netlify.app'],
   credentials: true
 }));
 
@@ -65,7 +67,10 @@ const __dirname = path.dirname(__filename);
 
 // Serve static files from uploads directory with CORS headers
 app.use('/uploads', (req, res, next) => {
-  res.header('Access-Control-Allow-Origin', process.env.FRONTEND_URL || 'http://localhost:3000');
+  const origin = req.headers.origin;
+  if (!origin || allowedOrigins.includes(origin)) {
+    res.header('Access-Control-Allow-Origin', origin || allowedOrigins[0]);
+  }
   res.header('Access-Control-Allow-Credentials', 'true');
   res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
@@ -98,11 +103,6 @@ app.use('/api/reports', reportRoutes);
 app.use('/api/promotion', promotionRoutes);
 app.use('/api/expenses', expenseRoutes);
 app.use('/api/dashboard', dashboardRoutes);
-
-// Root route
-app.get('/', (req, res) => {
-  res.json({ status: 'OK', message: 'College Backend API is running', version: '1.0.0' });
-});
 
 // Health check
 app.get('/api/health', (req, res) => {
