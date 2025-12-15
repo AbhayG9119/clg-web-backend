@@ -99,6 +99,11 @@ app.use('/api/promotion', promotionRoutes);
 app.use('/api/expenses', expenseRoutes);
 app.use('/api/dashboard', dashboardRoutes);
 
+// Root route
+app.get('/', (req, res) => {
+  res.json({ status: 'OK', message: 'College Backend API is running', version: '1.0.0' });
+});
+
 // Health check
 app.get('/api/health', (req, res) => {
   res.json({ status: 'OK', message: 'Server is running' });
