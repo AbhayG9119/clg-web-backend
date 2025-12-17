@@ -582,4 +582,43 @@ export const getFeeHeads = async (req, res) => {
   }
 };
 
+// Get Hostels
+export const getHostels = async (req, res) => {
+  try {
+    const hostels = await HostelFee.find({ isActive: true });
+    res.json(hostels);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
+// Get Hostel Assignments
+export const getHostelAssignments = async (req, res) => {
+  try {
+    const assignments = await StudentHostel.find({ isActive: true })
+      .populate('studentId', 'firstName lastName studentId department year semester')
+      .populate('hostelId', 'hostelName roomType feeType')
+      .populate('sessionId', 'sessionId startDate endDate');
+    res.json(assignments);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
+// Get Students
+export const getStudents = async (req, res) => {
+  try {
+    const studentsBA = await StudentBAS.find({ isActive: true }).select('firstName lastName studentId department year semester email');
+    const studentsBSc = await StudentBSc.find({ isActive: true }).select('firstName lastName studentId department year semester email');
+    const studentsBEd = await StudentBEd.find({ isActive: true }).select('firstName lastName studentId department year semester email');
+    const allStudents = [...studentsBA, ...studentsBSc, ...studentsBEd];
+    res.json(allStudents);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
 
