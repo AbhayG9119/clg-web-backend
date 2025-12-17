@@ -13,6 +13,10 @@ import {
   createHostelFee,
   assignHostelToStudent,
   getHostelFees,
+  getHostels,
+  getHostelAssignments,
+  getStudents,
+  getFeeHeads,
   applyDiscount,
   getDiscounts,
   createSubject,
@@ -41,6 +45,7 @@ router.get('/session/:sessionId/batches', protect, getBatchesForSession);
 // Fee structure routes
 router.post('/fee/structure', createFeeStructure);
 router.get('/fee/structures', getFeeStructures);
+router.get('/fee/heads', getFeeHeads);
 
 // Transport routes
 router.post('/transport', createTransportRoute);
