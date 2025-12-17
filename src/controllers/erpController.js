@@ -562,4 +562,24 @@ export const generateFeeReceipt = async (req, res) => {
   }
 };
 
+// Get Fee Heads
+export const getFeeHeads = async (req, res) => {
+  try {
+    const feeStructures = await FeeStructure.find({ isActive: true });
+    const feeHeadsSet = new Set();
+
+    feeStructures.forEach(structure => {
+      structure.feeHeads.forEach(head => {
+        feeHeadsSet.add(head.name);
+      });
+    });
+
+    const feeHeads = Array.from(feeHeadsSet).sort();
+    res.json(feeHeads);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
 
